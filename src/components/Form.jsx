@@ -25,4 +25,4 @@ const Form = ({client}) => {
   )
 }
 
-export default Form
+export {Form}
