@@ -7,17 +7,24 @@ export const action = async ({request})=>{
   const formData = await request.formData()
   const data = Object.fromEntries(formData)
 
+  const email =formData.get('email')
+
   // Validate data
   const errors = []
   if(Object.values(data).includes('')){
     errors.push('All fields are required')
   }
 
+  let regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
+
+  if(!regex.test(email)){
+    errors.push('Email is invalid')
+  }
+
+
   if(Object.keys(errors).length){
     return errors
   }
-
-  console.log(errors)
 
   return {}
 }
@@ -39,7 +46,7 @@ const NewClient = () => {
       <div className="bg-white border rounded-md shadow-sm my-8">
         <div className="p-4 md:p-8">
          {errors?.length && errors.map((err,i)=><Error key={i}>{err}</Error>)} 
-          <Form method="POST">
+          <Form method="POST" noValidate>
             <FormClient/>
             <div className="my-10">
               <input type="submit" value="Register new client" className="w-full text-xl bg-purple-500 text-white p-3 rounded hover:bg-purple-600 hover:ring-4 hover:ring-purple-600/25 transition cursor-pointer"></input>
