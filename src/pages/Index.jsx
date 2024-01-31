@@ -4,7 +4,7 @@ import Client from '../components/Client'
 
 export const loader =()=>{
   const clients = getClients()
-  return 
+  return clients
 }
 
 const Index = () => {
